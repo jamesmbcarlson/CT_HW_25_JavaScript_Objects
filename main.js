@@ -77,6 +77,7 @@ searchBooksInLibrary("the");
 displayBooks100PagesAndOver();
 displayBooksUnder100Pages();
 alterTitlesAndAuthor();
+console.log("");
 
 
 
@@ -106,15 +107,19 @@ class Account {
     
     // TASK 3 - Create a method to calculate compound interest based on the balance and specified interest rate.
     calcCompoundInterest(interestRate, compoundedPerYear, years) {
-        /* I found this formula online:
-            A = P(1 + r/n) ^ (n*t)
-            where
-            A = amount to be had after specified time(t)
-            P = amount we started with
-            r = interestRate (decimal)
-            n = compoundedPerYear, amount of times interest is comoounded per year -- e.g., monthly 
-            t = amount of time in years
-        */
+
+    /* Using this formula:
+        A = P(1 + r/n) ^ (n*t)
+        where
+        A = compoundInterest - amount to be had after specified time(t)
+        P = balance - amount we started with
+        r = interestRate - percentage in decimal
+        n = compoundedPerYear - amount of times interest is comoounded per year (e.g., quartly, monthly)
+        t = years - amount of time in years
+    */
+        
+        let compoundInterest = this.balance * (Math.pow((1 + interestRate/compoundedPerYear), (compoundedPerYear * years)));
+        return compoundInterest.toFixed(2);
     }
 }
 
@@ -126,3 +131,11 @@ account.deposit(260);
 console.log(account.balance);
 account.withdraw(40);
 console.log(account.balance);
+
+// tested the compound interest formula with the examples found here: https://www.youtube.com/watch?v=QKn7tUf2eaA
+
+let account2 = new Account(543987123, 3155, "Daddy Warbucks");
+console.log(account2.calcCompoundInterest(0.04, 4, 5));
+
+let account3 = new Account(719329855, 5483.96, "C. Montgomery Burns");
+console.log(account3.calcCompoundInterest(0.018, 12, 5));
